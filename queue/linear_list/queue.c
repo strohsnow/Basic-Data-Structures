@@ -11,7 +11,7 @@ Queue *queue_create()
 
 void queue_destroy(Queue *queue)
 {
-    Node *node = queue->head, *node_prev;
+    Node *node = queue->head, *node_prev = NULL;
     while (node != NULL)
     {
         node_prev = node;
