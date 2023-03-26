@@ -85,4 +85,3 @@ void queue_print(const Queue *queue)
     while (node != queue->tail->next);
     printf("\n");
 }
-
