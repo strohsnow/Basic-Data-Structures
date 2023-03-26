@@ -36,7 +36,7 @@ int stack_pop(Stack *stack, int *info)
 
     *info = stack->array[--stack->top];
 
-    return 1;
+    return 0;
 }
 
 void stack_print(const Stack *stack)
