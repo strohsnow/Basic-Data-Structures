@@ -70,4 +70,3 @@ void queue_print(const Queue *queue)
     }
     printf("\n");
 }
-
