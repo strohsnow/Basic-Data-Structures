@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 #include "table.h"
 
 int table_find(const Table *table, const int key)
