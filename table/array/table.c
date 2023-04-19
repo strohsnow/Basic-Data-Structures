@@ -16,10 +16,10 @@ int table_insert(Table *table, const int key, const char *info)
     if (table_find(table, key) >= 0)
         return DUPLICATE_KEY;
 
-    if (table->msize >= table->csize)
+    if (table->csize >= table->msize)
     {
         table_garbage_collector(table);
-        if (table->msize >= table->csize)
+        if (table->csize >= table->msize)
             return TABLE_OVERFLOW;
     }
     
