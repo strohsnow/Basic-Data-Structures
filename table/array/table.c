@@ -4,7 +4,7 @@
 
 int table_find(const Table *table, const int key)
 {
-    for (int i = 0; i < table->msize; ++i)
+    for (int i = 0; i < table->csize; ++i)
         if (table->ks[i].busy && table->ks[i].key == key)
             return i;
 
@@ -68,7 +68,6 @@ void table_garbage_collector(Table *table)
         table->ks[i].busy = 0;
         free(table->ks[i].data->info);
         free(table->ks[i].data);
-        table->ks[i].data = NULL;
     }
 
     table->csize = j;
