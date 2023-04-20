@@ -49,7 +49,6 @@ int table_delete(Table *table, const int key)
     table->ks[i].busy = 0;
     free(table->ks[i].data->info);
     free(table->ks[i].data);
-    table->ks[i].data = NULL;
 
     return OK;
 }
