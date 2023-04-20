@@ -1,0 +1,42 @@
+struct Item {
+    int key;
+    char *info;
+    struct Item *next;
+}
+
+SIZE = 10;
+int hash(int k) { return k % SIZE; }
+
+0 ok
+1 duplicate key
+2 key not found
+
+0 -> {[10, 'str10']}
+1 -> {[11, 'str11'], [21, 'str21']}
+2 -> {}
+3 -> {}
+4 -> {[24, 'str24']}
+5 -> {}
+6 -> {[16, 'str16']}
+7 -> {[27, 'str27']}
+8 -> {[28, 'str28']}
+9 -> {}
+
+n = 6;
+
+insert(19, str19); -> used = 1; errcode = 0;
+
+0 -> {[10, 'str10']}
+1 -> {[11, 'str11'], [21, 'str21']}
+2 -> {}
+3 -> {}
+4 -> {[24, 'str24']}
+5 -> {}
+6 -> {[16, 'str16']}
+7 -> {[27, 'str27']}
+8 -> {[28, 'str28']}
+9 -> {[19, 'str19']}
+
+n = 7;
+
+del(3); -> used = 1; errcode = 2;
