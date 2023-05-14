@@ -7,6 +7,7 @@ typedef struct Node
     char *info;
     struct Node *left;
     struct Node *right;
+    struct Node *parent;
 }
 Node;
 

@@ -42,6 +42,7 @@ int tree_insert(Tree *tree, const int key, const char *info)
     new->key = key;
     new->info = strdup(info);
     new->left = new->right = NULL;
+    new->parent = par;
 
     if (par == NULL)
         tree->root = new;
@@ -56,13 +57,10 @@ int tree_insert(Tree *tree, const int key, const char *info)
 int tree_delete(Tree *tree, const int key)
 {
     Node *ptr = tree->root;
-    Node *par = NULL;
     while (ptr != NULL)
     {
         if (ptr->key == key)
             break;
-
-        par = ptr;
 
         if (key < ptr->key)
             ptr = ptr->left;
@@ -73,14 +71,28 @@ int tree_delete(Tree *tree, const int key)
     if (ptr == NULL)
         return 1;
 
+    Node *par = ptr->parent;
+
     if (ptr->right == NULL)
     {
         if (par == NULL)
+        {
             tree->root = ptr->left;
+            if (tree->root != NULL)
+                tree->root->parent = par;
+        }
         else if (ptr == par->left)
+        {
             par->left = ptr->left;
+            if (par->left != NULL)
+                par->left->parent = par;
+        }
         else /* ptr == par->right */
+        {
             par->right = ptr->left;
+            if (par->right != NULL)
+                par->right->parent = par;
+        }
     }
     else
     {
@@ -88,6 +100,8 @@ int tree_delete(Tree *tree, const int key)
         if (right->left == NULL)
         {
             right->left = ptr->left;
+            if (right->left != NULL)
+                right->left->parent = right;
 
             if (par == NULL)
                 tree->root = right;
@@ -95,19 +109,26 @@ int tree_delete(Tree *tree, const int key)
                 par->left = right;
             else /* ptr = par->right */
                 par->right = right;
+
+            right->parent = par;
         }
         else
         {
             Node *succ = right->left;
             while (succ->left != NULL)
-            {
-                right = succ;
                 succ = succ->left;
-            }
+            right = succ->parent;
 
             right->left = succ->right;
+            if (right->left != NULL)
+                right->left->parent = right;
+
             succ->left = ptr->left;
+            if (succ->left != NULL)
+                succ->left->parent = succ;
+
             succ->right = ptr->right;
+            succ->right->parent = succ;
 
             if (par == NULL)
                 tree->root = succ;
@@ -115,6 +136,8 @@ int tree_delete(Tree *tree, const int key)
                 par->left = succ;
             else /* ptr == par->right */
                 par->right = succ;
+
+            succ->parent = par;
         }
     }
 
